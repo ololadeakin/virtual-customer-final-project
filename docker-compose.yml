@@ -3,6 +3,7 @@ version: "3.7"
 services:
   azure-event-bus:
     image: lolaakin/order-service:latest
+    platform: linux/amd64
     container_name: 'azure-event-bus'
     restart: always
     ports:
