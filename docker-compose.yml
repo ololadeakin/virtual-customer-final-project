@@ -1,32 +1,6 @@
 version: "3.7"
 
 services:
-  azure-event-bus:
-    image: lolaakin/order-service:latest
-    platform: linux/amd64
-    container_name: 'azure-event-bus'
-    restart: always
-    ports:
-      - 8080:8080
-    healthcheck:
-      test: ["CMD", "wget", "-O", "/dev/null", "-q", "http://azure-event-bus:8080/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-    environment:
-      - ORDER_QUEUE_HOSTNAME=my-eventbus-8915.servicebus.windows.net
-      - ORDER_QUEUE_PORT=5671
-      - ORDER_QUEUE_USERNAME=RootManageSharedAccessKey
-      - ORDER_QUEUE_PASSWORD=HLF3Z+u8+fNAbr5THN0iRJ1PLby2GGObJ+ASbCfceXI=
-      - ORDER_QUEUE_NAME=orders
-      - ORDER_QUEUE_RECONNECT_LIMIT=3
-      - ORDER_QUEUE_TRANSPORT=tls
-    networks:
-      - backend_services
-    depends_on:
-      order-service:
-        condition: service_healthy
-
   order-service:
     image: lolaakin/order-service:latest
     container_name: 'order-service'
